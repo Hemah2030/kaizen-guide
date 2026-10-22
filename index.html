@@ -1,0 +1,1147 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>دليل الكايزن</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;500;600;700&family=Shippori+Mincho:wght@700&display=swap">
+<style>
+/* Layout: a guided path of ten chapters under a sticky chapter bar.
+   Hero pairs the kanji 改善 with a rising staircase (small steps that compound). */
+:root{
+  --bg:#F1F5F4; --surface:#FFFFFF; --sunken:#E3EBE9; --fg:#15213A; --muted:#55627A; --line:#CCD7D6;
+  --accent:#17795F; --accent-ink:#FFFFFF; --accent-soft:#D3E9E1;
+  --warm:#AE4520; --warm-soft:#F7E4DA;
+  --good:#1E7F4F; --bad:#B3261E;
+  --font-display:"Noto Naskh Arabic","Amiri","Traditional Arabic","Segoe UI",Tahoma,serif;
+  --font-body:"Noto Naskh Arabic","Amiri","Traditional Arabic","Segoe UI",Tahoma,serif;
+  --font-kanji:"Shippori Mincho","Yu Mincho","Hiragino Mincho ProN",serif;
+  --t-xs:.8125rem; --t-sm:.9375rem; --t-md:1.0625rem; --t-lg:1.3rem;
+  --t-xl:clamp(1.7rem,4.6vw,2.45rem); --t-2xl:clamp(2.2rem,7.2vw,4rem);
+  --r:14px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0D1422; --surface:#162036; --sunken:#111A2D; --fg:#E8EDF6; --muted:#A0ACC3; --line:#27344F;
+    --accent:#4FC8A6; --accent-ink:#06281F; --accent-soft:#12372F;
+    --warm:#F2916A; --warm-soft:#3A2419;
+    --good:#5BD08A; --bad:#FF8A80;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0D1422; --surface:#162036; --sunken:#111A2D; --fg:#E8EDF6; --muted:#A0ACC3; --line:#27344F;
+  --accent:#4FC8A6; --accent-ink:#06281F; --accent-soft:#12372F;
+  --warm:#F2916A; --warm-soft:#3A2419;
+  --good:#5BD08A; --bad:#FF8A80;
+  color-scheme:dark;
+}
+@media (prefers-reduced-motion: no-preference){ :root{scroll-behavior:smooth} }
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  direction:rtl; background:var(--bg); color:var(--fg);
+  font-family:var(--font-body); font-size:var(--t-md); line-height:1.9; text-wrap:pretty;
+  -webkit-text-size-adjust:100%;
+}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:30}
+h1,h2,h3,h4{font-family:var(--font-display);font-weight:600;line-height:1.35;margin:0;text-wrap:balance}
+h1{font-size:var(--t-2xl);font-weight:700}
+h2{font-size:var(--t-xl)}
+h3{font-size:var(--t-lg)}
+h4{font-size:var(--t-md)}
+p{margin:0}
+a{color:var(--accent)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:6px}
+.wrap{
+  max-width:1080px;margin-inline:auto;
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* header */
+.site-head{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
+.site-head .wrap{display:flex;align-items:center;gap:1rem}
+.brand{font-family:var(--font-display);font-weight:700;font-size:1.1rem;white-space:nowrap;padding-block:.7rem;text-decoration:none;color:var(--fg);display:flex;gap:.5rem;align-items:baseline}
+.brand span{font-family:var(--font-kanji);color:var(--accent);font-size:1.25rem}
+.nav{display:flex;gap:.15rem;overflow-x:auto;scrollbar-width:none;min-width:0;flex:1}
+.nav::-webkit-scrollbar{display:none}
+.nav a{white-space:nowrap;text-decoration:none;color:var(--muted);font-size:var(--t-sm);padding:.75rem .7rem;border-bottom:3px solid transparent;font-weight:500}
+.nav a:hover{color:var(--fg)}
+.nav a[aria-current="true"]{color:var(--accent);border-bottom-color:var(--accent)}
+
+/* bands */
+.band{padding-block:clamp(3rem,8vw,5.5rem)}
+.band--alt{background:var(--sunken)}
+section[id]{scroll-margin-top:calc(3.4rem + env(safe-area-inset-top,0px))}
+.sec-head{display:grid;gap:.6rem;margin-bottom:2rem;max-width:46rem}
+.eyebrow{font-size:var(--t-sm);font-weight:600;color:var(--accent)}
+.lead{font-size:1.15rem;max-width:42rem;color:var(--fg)}
+.muted{color:var(--muted)}
+.small{font-size:var(--t-sm)}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:.55rem 1.3rem;border-radius:10px;font:inherit;font-weight:600;text-decoration:none;cursor:pointer;border:1.5px solid var(--accent);background:var(--accent);color:var(--accent-ink)}
+.btn--ghost{background:transparent;color:var(--accent)}
+.btn:hover{filter:brightness(1.07)}
+.row{display:flex;flex-wrap:wrap;gap:.75rem}
+
+/* hero */
+.hero{padding-block:clamp(2.5rem,7vw,5rem) clamp(2.5rem,6vw,4rem)}
+.hero-grid{display:grid;gap:2.5rem;grid-template-columns:1.25fr 1fr;align-items:center}
+.hero-grid>*{min-width:0}
+.hero h1{margin-block:.6rem 1.1rem}
+.hero .lead{margin-bottom:1.6rem}
+.hero-art{display:grid;gap:.5rem;justify-items:center}
+.kanji{font-family:var(--font-kanji);font-weight:700;font-size:clamp(4.5rem,17vw,8.5rem);line-height:1;color:var(--accent);direction:ltr;letter-spacing:.04em}
+.stairs{width:100%;max-width:340px;height:auto;direction:ltr}
+.stairs rect{fill:var(--accent)}
+.stairs .base{stroke:var(--line);stroke-width:2}
+.stairs .flag{stroke:var(--fg);stroke-width:2;fill:none}
+.stairs .flag-f{fill:var(--warm)}
+.stairs text{font-family:var(--font-body);font-size:12px;fill:var(--muted)}
+.quick{margin-top:2.5rem;display:grid;gap:.9rem;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr))}
+.quick li{list-style:none;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:1rem 1.1rem;font-size:var(--t-sm);line-height:1.8}
+.quick{padding:0;margin-bottom:0}
+.byline{display:inline-flex;flex-direction:column;gap:.1rem;margin-bottom:1.4rem;padding-inline-start:.9rem;border-inline-start:3px solid var(--accent);line-height:1.6}
+.byline small{font-size:var(--t-xs);color:var(--muted)}
+.byline strong{font-family:var(--font-display);font-size:var(--t-md);font-weight:700}
+.quick b{display:block;font-family:var(--font-display);color:var(--accent);font-size:var(--t-md);margin-bottom:.2rem}
+
+/* cards & grids */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:1.3rem}
+.grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr))}
+.grid>*{min-width:0}
+.grid--2{grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr))}
+.tag{display:inline-block;font-size:var(--t-xs);font-weight:600;padding:.1rem .65rem;border-radius:999px;background:var(--accent-soft);color:var(--accent);margin-bottom:.6rem;line-height:1.7}
+.tag--warm{background:var(--warm-soft);color:var(--warm)}
+.card h3,.card h4{margin-bottom:.4rem}
+.lesson{margin-top:.8rem;padding-top:.8rem;border-top:1px dashed var(--line);font-size:var(--t-sm);color:var(--muted)}
+.lesson b{color:var(--fg)}
+
+/* equation */
+.equation{display:flex;flex-wrap:wrap;align-items:stretch;gap:.8rem;margin-block:1.5rem 2rem}
+.eq-op{display:flex;align-items:center;font-size:2rem;color:var(--muted);font-family:var(--font-display)}
+.eq-tile{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:1rem 1.3rem;text-align:center;min-width:8.5rem}
+.eq-tile .k{font-family:var(--font-kanji);font-size:3rem;line-height:1.1;color:var(--accent);direction:ltr}
+.eq-tile .r{font-size:var(--t-xs);color:var(--muted);direction:ltr}
+.eq-tile .a{font-family:var(--font-display);font-weight:600}
+.eq-tile--sum{background:var(--accent);border-color:var(--accent)}
+.eq-tile--sum .k,.eq-tile--sum .r,.eq-tile--sum .a{color:var(--accent-ink)}
+
+/* table */
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:480px;font-size:var(--t-sm)}
+th,td{padding:.75rem 1rem;text-align:start;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--font-display);font-weight:600;background:var(--sunken)}
+tr:last-child td{border-bottom:0}
+td:first-child{font-weight:600;white-space:nowrap}
+
+/* calculator */
+.calc{display:grid;gap:1.5rem;grid-template-columns:1fr 1.1fr;align-items:start;margin-top:2.5rem}
+.calc>*{min-width:0}
+.ctl{display:grid;gap:.4rem;margin-bottom:1.1rem}
+.ctl label{font-weight:600;display:flex;justify-content:space-between;gap:1rem}
+.ctl output{color:var(--accent);font-variant-numeric:tabular-nums;direction:ltr}
+input[type=range]{width:100%;accent-color:var(--accent);min-height:32px}
+.big{font-family:var(--font-display);font-weight:700;font-size:clamp(2.2rem,8vw,3.2rem);color:var(--accent);line-height:1.2;font-variant-numeric:tabular-nums;direction:ltr;text-align:start}
+.chart{width:100%;height:auto;direction:ltr;display:block}
+.chart .grid-l{stroke:var(--line);stroke-width:1}
+.chart .ln{fill:none;stroke:var(--accent);stroke-width:3;stroke-linejoin:round;stroke-linecap:round}
+.chart .lin{fill:none;stroke:var(--muted);stroke-width:2;stroke-dasharray:5 5}
+.chart .ar{fill:var(--accent);opacity:.14}
+.chart .dot{fill:var(--accent);stroke:var(--surface);stroke-width:3}
+.chart text{font-family:var(--font-body);font-size:10.5px;fill:var(--muted);font-variant-numeric:tabular-nums}
+.chart .vl{fill:var(--accent);font-weight:600;font-size:12px}
+.legend{display:flex;flex-wrap:wrap;gap:.4rem 1.2rem;font-size:var(--t-xs);color:var(--muted);margin-top:.5rem}
+.legend i{display:inline-block;width:1.4rem;height:0;border-top:3px solid var(--accent);vertical-align:middle;margin-inline-end:.35rem}
+.legend i.d{border-top:2px dashed var(--muted)}
+
+/* timeline */
+.timeline{list-style:none;margin:0;padding:0;border-inline-start:2px solid var(--line);margin-inline-start:.5rem}
+.timeline li{position:relative;padding-inline-start:1.6rem;padding-block-end:1.8rem}
+.timeline li:last-child{padding-block-end:0}
+.timeline li::before{content:"";position:absolute;inset-inline-start:-.55rem;top:.55rem;width:.85rem;height:.85rem;border-radius:50%;background:var(--accent);border:3px solid var(--bg)}
+.band--alt .timeline li::before{border-color:var(--sunken)}
+.when{font-family:var(--font-display);font-weight:700;color:var(--accent);display:block}
+.timeline h3{font-size:var(--t-md);margin-bottom:.15rem}
+
+/* details */
+details{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);margin-bottom:.75rem}
+summary{cursor:pointer;list-style:none;padding:1rem 1.2rem;font-family:var(--font-display);font-weight:600;font-size:var(--t-md);display:flex;justify-content:space-between;align-items:center;gap:1rem;min-height:48px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"";width:.6rem;height:.6rem;border-inline-end:2.5px solid var(--accent);border-bottom:2.5px solid var(--accent);transform:rotate(45deg);transition:transform .2s;flex:none;margin-top:-.25rem}
+details[open] summary::after{transform:rotate(-135deg);margin-top:.2rem}
+details .body{padding:0 1.2rem 1.1rem;display:grid;gap:.7rem}
+.ex{background:var(--sunken);border-radius:10px;padding:.7rem .9rem;font-size:var(--t-sm)}
+.ex b{color:var(--warm)}
+
+/* tabs */
+.tablist{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.1rem}
+.tablist [role=tab]{font:inherit;font-weight:600;font-size:var(--t-sm);min-height:44px;padding:.45rem 1.1rem;border-radius:999px;border:1.5px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer}
+.tablist [role=tab][aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+[role=tabpanel]{display:grid;gap:.9rem}
+[role=tabpanel][hidden]{display:none}
+.kv{display:grid;gap:.15rem}
+.kv dt{font-weight:600;font-size:var(--t-sm);color:var(--accent)}
+.kv dd{margin:0}
+dl.kv-list{margin:0;display:grid;gap:.9rem}
+dl.kv-list dd{margin:0}
+
+/* PDCA */
+.pdca{display:grid;gap:2rem;grid-template-columns:260px 1fr;align-items:center}
+.pdca>*{min-width:0}
+#pdcaRing{width:100%;max-width:260px;height:auto;direction:ltr;justify-self:center}
+#pdcaRing .arc{fill:none;stroke:var(--line);stroke-width:32;stroke-linecap:butt;cursor:pointer}
+#pdcaRing .arc.on{stroke:var(--accent)}
+#pdcaRing .arc-l{font-family:var(--font-display);font-weight:700;font-size:20px;fill:var(--muted);cursor:pointer}
+#pdcaRing .arc-l.on{fill:var(--accent-ink)}
+#pdcaRing .mid{font-family:var(--font-display);font-weight:700;font-size:22px;fill:var(--fg)}
+#pdcaRing .mid2{font-family:var(--font-body);font-size:11px;fill:var(--muted)}
+
+/* 5S + wastes */
+.s5{display:grid;gap:.9rem;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr))}
+.s5 .card{padding:1.1rem}
+.s5 .jp{font-family:var(--font-kanji);font-size:2.2rem;color:var(--accent);line-height:1.1;direction:ltr}
+.s5 .ro{font-size:var(--t-xs);color:var(--muted);direction:ltr;text-align:start}
+.s5 h4{margin-block:.4rem .3rem}
+.s5 p{font-size:var(--t-sm)}
+.waste{display:grid;gap:.7rem;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr))}
+.waste div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:.8rem 1rem;font-size:var(--t-sm)}
+.waste b{font-family:var(--font-display);color:var(--accent);display:block}
+.sub{margin-top:3rem;margin-bottom:1rem}
+
+/* chooser */
+.choose{display:grid;gap:1.2rem;grid-template-columns:1fr 1fr;align-items:start}
+.choose>*{min-width:0}
+.opts{display:grid;gap:.5rem}
+.opt{font:inherit;text-align:start;min-height:48px;padding:.6rem 1rem;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer}
+.opt[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft);font-weight:600}
+.result{background:var(--surface);border:1.5px solid var(--accent);border-radius:var(--r);padding:1.3rem;display:grid;gap:.6rem}
+.result h4{color:var(--accent);font-size:var(--t-lg)}
+
+/* pairs */
+.pairs{display:grid;gap:.8rem}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+.pair>div{padding:1rem 1.1rem;border-radius:var(--r);font-size:var(--t-sm);border:1px solid var(--line);background:var(--surface)}
+.pair .no b{color:var(--bad)}
+.pair .yes b{color:var(--good)}
+.pair b{display:block;font-family:var(--font-display);margin-bottom:.15rem}
+
+/* steps */
+.weeks{list-style:none;margin:0;padding:0;display:grid;gap:.9rem;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr))}
+.weeks li{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:1.1rem 1.2rem}
+.weeks b{font-family:var(--font-display);color:var(--accent);display:block;font-size:var(--t-md)}
+.weeks p{font-size:var(--t-sm)}
+
+/* builder, tracker, form */
+.two{display:grid;gap:1.5rem;grid-template-columns:1fr 1fr;align-items:start}
+.two>*{min-width:0}
+select,input[type=text],textarea{font:inherit;width:100%;min-height:46px;padding:.5rem .8rem;border-radius:10px;border:1.5px solid var(--line);background:var(--surface);color:var(--fg)}
+textarea{resize:vertical;line-height:1.8}
+label.f{display:grid;gap:.3rem;font-weight:600;font-size:var(--t-sm);margin-bottom:.8rem}
+.days{display:grid;grid-template-columns:repeat(auto-fill,minmax(2.9rem,1fr));gap:.4rem;margin-block:1rem}
+.day{position:relative;display:block}
+.day input{position:absolute;opacity:0;inset:0;width:100%;height:100%;margin:0;cursor:pointer}
+.day span{display:grid;place-items:center;min-height:2.9rem;border-radius:10px;border:1.5px solid var(--line);background:var(--surface);font-variant-numeric:tabular-nums;font-size:var(--t-sm)}
+.day input:checked+span{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:700}
+.day input:focus-visible+span{outline:3px solid var(--accent);outline-offset:2px}
+.bar{height:10px;border-radius:99px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
+.stat{display:flex;justify-content:space-between;gap:1rem;font-size:var(--t-sm);margin-bottom:.4rem}
+.stat b{font-variant-numeric:tabular-nums}
+.btn-sm{min-height:44px;padding:.4rem 1rem;font-size:var(--t-sm)}
+.status{min-height:1.6em;font-size:var(--t-sm);color:var(--accent)}
+.six{display:grid;gap:.7rem;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));list-style:none;padding:0;margin:0 0 2.5rem}
+.six li{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:.9rem 1.1rem;font-size:var(--t-sm)}
+.six b{font-family:var(--font-display);color:var(--accent);display:block}
+
+/* quiz */
+.quiz{max-width:42rem}
+.q-meta{display:flex;justify-content:space-between;color:var(--muted);font-size:var(--t-sm);margin-bottom:.8rem;font-variant-numeric:tabular-nums}
+.q-opts{display:grid;gap:.55rem;margin-block:1rem}
+.q-opt{font:inherit;text-align:start;min-height:48px;padding:.6rem 1rem;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer}
+.q-opt:disabled{cursor:default}
+.q-opt.right{border-color:var(--good);background:var(--accent-soft);font-weight:600}
+.q-opt.wrong{border-color:var(--bad)}
+.q-fb{min-height:3.2em;font-size:var(--t-sm)}
+.q-fb.ok{color:var(--good)}
+.q-fb.no{color:var(--bad)}
+
+/* sources */
+.src{columns:2 300px;column-gap:2rem;padding:0;margin:0;list-style:none;font-size:var(--t-sm)}
+.src li{break-inside:avoid;margin-bottom:.6rem;overflow-wrap:anywhere}
+footer{padding-block:2rem 3rem;border-top:1px solid var(--line);font-size:var(--t-sm);color:var(--muted)}
+
+@media (max-width:820px){
+  .hero-grid,.calc,.pdca,.choose,.two{grid-template-columns:1fr}
+  .hero-art{order:-1}
+  .pair{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div dir="rtl" lang="ar" id="top">
+
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="#top"><span lang="ja">改善</span> دليل الكايزن</a>
+    <nav class="nav" aria-label="فصول الدليل">
+      <a href="#concept">المفهوم</a>
+      <a href="#journey">الرحلة</a>
+      <a href="#principles">المبادئ</a>
+      <a href="#tools">الأدوات</a>
+      <a href="#stories">قصص حقيقية</a>
+      <a href="#scenarios">مواقف</a>
+      <a href="#personal">كايزن شخصي</a>
+      <a href="#mistakes">أخطاء شائعة</a>
+      <a href="#start">ابدأ</a>
+      <a href="#quiz">اختبر نفسك</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- HERO -->
+<section class="hero" aria-labelledby="h-hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <span class="eyebrow">دليل عملي للتحسين المستمر</span>
+        <h1 id="h-hero">الكايزن: التغيير الكبير يبدأ بخطوة صغيرة</h1>
+        <p class="lead">فلسفة يابانية وُلدت في المصانع، ثم انتقلت إلى المستشفيات والمدارس والبيوت. في هذا الدليل تتعرف على فكرتها وأدواتها، وتقرأ قصص من طبّقوها، ثم تجرّب أول خطوة بنفسك في دقيقة واحدة.</p>
+        <p class="byline"><small>إعداد وتصميم</small><strong>أ/ عائشة بنت حامد البحيري</strong></p>
+        <div class="row">
+          <a class="btn" href="#concept">ابدأ الجولة</a>
+          <a class="btn btn--ghost" href="#personal">جرّب خطوتك الأولى</a>
+        </div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="kanji" lang="ja">改善</div>
+        <svg class="stairs" viewBox="0 0 300 206" xmlns="http://www.w3.org/2000/svg">
+          <line class="base" x1="10" y1="182" x2="290" y2="182"/>
+          <rect x="262" y="160" width="30" height="22" rx="3" opacity=".28"/>
+          <rect x="224" y="138" width="30" height="44" rx="3" opacity=".4"/>
+          <rect x="186" y="116" width="30" height="66" rx="3" opacity=".52"/>
+          <rect x="148" y="94" width="30" height="88" rx="3" opacity=".64"/>
+          <rect x="110" y="72" width="30" height="110" rx="3" opacity=".76"/>
+          <rect x="72" y="50" width="30" height="132" rx="3" opacity=".88"/>
+          <rect x="34" y="28" width="30" height="154" rx="3" opacity="1"/>
+          <line class="flag" x1="49" y1="28" x2="49" y2="6"/>
+          <path class="flag-f" d="M49 6 L69 12 L49 18 Z"/>
+          <text x="150" y="200" text-anchor="middle">خطوة بعد خطوة</text>
+        </svg>
+      </div>
+    </div>
+
+    <ul class="quick" aria-label="الدليل في أربع نقاط">
+      <li><b>الفكرة</b>تحسينات صغيرة ومتكررة بدل قفزة واحدة كبيرة.</li>
+      <li><b>المشاركون</b>كل من يؤدي العمل، لأنه أعرف الناس بمشكلاته.</li>
+      <li><b>الأدوات</b>دورة PDCA، وترتيب 5S، وجولة في مكان العمل الفعلي.</li>
+      <li><b>المجال</b>الشركة والمستشفى والمدرسة، وعاداتك الشخصية أيضًا.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 1 CONCEPT -->
+<section class="band band--alt" id="concept" aria-labelledby="h-concept">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">الفصل 1</span>
+      <h2 id="h-concept">ما هو الكايزن؟</h2>
+      <p class="lead">كلمة يابانية تتكوّن من مقطعين، ومعناها المباشر «التغيير للأفضل». وتُترجم في الإدارة إلى «التحسين المستمر».</p>
+    </div>
+
+    <div class="equation" role="group" aria-label="أصل كلمة كايزن">
+      <div class="eq-tile"><div class="k" lang="ja">改</div><div class="r">kai</div><div class="a">تغيير</div></div>
+      <div class="eq-op" aria-hidden="true">+</div>
+      <div class="eq-tile"><div class="k" lang="ja">善</div><div class="r">zen</div><div class="a">جيّد</div></div>
+      <div class="eq-op" aria-hidden="true">=</div>
+      <div class="eq-tile eq-tile--sum"><div class="k" lang="ja">改善</div><div class="r">kaizen</div><div class="a">التغيير للأفضل</div></div>
+    </div>
+
+    <p class="muted" style="max-width:46rem;margin-bottom:2rem">الكلمة اليابانية وحدها لا تحمل معنى «المستمر». هذا المعنى جاء من طريقة استخدام الشركات لها، وأوضح نموذج على ذلك هو شركة تويوتا في النصف الثاني من القرن العشرين. وعمليًا، الكايزن هو أي تحسين، سواء كان حدثًا كبيرًا لمرة واحدة أو سلسلة من التغييرات الصغيرة.</p>
+
+    <div class="grid">
+      <div class="card"><h3>صغير</h3><p>تغيير تستطيع تجربته اليوم دون ميزانية أو موافقات: رفّ يُرتَّب، أو خطوة تُحذف من إجراء.</p></div>
+      <div class="card"><h3>للجميع</h3><p>الموظف والمعلّم والممرض والمدير، كلٌّ يقترح ويجرّب. من ينفّذ المهمة يرى ما لا يراه غيره.</p></div>
+      <div class="card"><h3>كل يوم</h3><p>الكايزن عادة وليس مشروعًا. إذا لم يتغيّر شيء في عملك هذا الأسبوع، فأنت تتعايش مع المشكلة ولا تحسّن شيئًا.</p></div>
+    </div>
+
+    <h3 class="sub">الكايزن مقابل الابتكار الكبير</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th></th><th>الكايزن</th><th>الابتكار الكبير</th></tr></thead>
+        <tbody>
+          <tr><td>حجم التغيير</td><td>صغير ومتكرر</td><td>كبير ومفاجئ</td></tr>
+          <tr><td>من يشارك</td><td>الجميع</td><td>غالبًا فريق متخصص أو الإدارة العليا</td></tr>
+          <tr><td>المخاطرة</td><td>منخفضة، لأن التجربة صغيرة</td><td>أعلى، لأن الاستثمار كبير</td></tr>
+          <tr><td>الإيقاع</td><td>عادة يومية</td><td>مشروع له بداية ونهاية</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="small muted" style="margin-top:.6rem">مقارنة مبسطة للتوضيح. الأسلوبان يكمّلان بعضهما في المؤسسات الناجحة.</p>
+
+    <div class="calc card" aria-labelledby="h-calc">
+      <div>
+        <h3 id="h-calc" style="margin-bottom:.4rem">جرّب قوة التراكم</h3>
+        <p class="muted small" style="margin-bottom:1.2rem">حرّك المؤشرين لترى ماذا يفعل تحسّن صغير ومنتظم بمرور الأسابيع.</p>
+        <div class="ctl">
+          <label for="rate">التحسّن كل أسبوع <output id="rateOut">1%</output></label>
+          <input type="range" id="rate" min="0.5" max="3" step="0.5" value="1">
+        </div>
+        <div class="ctl">
+          <label for="weeks">المدة <output id="weeksOut">52 أسبوعًا</output></label>
+          <input type="range" id="weeks" min="4" max="104" step="4" value="52">
+        </div>
+        <div class="muted small">التحسّن الإجمالي</div>
+        <div class="big" id="total" aria-live="polite">+67.8%</div>
+        <p class="small muted" id="calcNote" style="margin-top:.4rem"></p>
+      </div>
+      <div>
+        <svg class="chart" id="chart" viewBox="0 0 320 190" role="img" aria-label="رسم يقارن التحسن المتراكم بالتحسن الخطي"></svg>
+        <div class="legend"><span><i></i>مع التراكم</span><span><i class="d"></i>جمع بسيط بلا تراكم</span></div>
+      </div>
+    </div>
+    <p class="small muted" style="margin-top:.6rem">الحساب توضيحي: يفترض نسبة ثابتة كل أسبوع، والتحسّن الحقيقي لا يسير بخط مستقيم.</p>
+  </div>
+</section>
+
+<!-- 2 JOURNEY -->
+<section class="band" id="journey" aria-labelledby="h-journey">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">الفصل 2</span>
+      <h2 id="h-journey">من ورش اليابان إلى العالم</h2>
+      <p class="lead">فكرة بسيطة قطعت سبعة عقود، وغيّرت كل مرة المكان الذي تُطبَّق فيه.</p>
+    </div>
+    <ol class="timeline">
+      <li>
+        <span class="when">الأربعينيات</span>
+        <h3>حلقات الجودة</h3>
+        <p>بعد الحرب العالمية الثانية تنشأ في اليابان مجموعات من الموظفين تحدد مشكلات العمل وتحللها وتحلها لتحسين الجودة والإنتاجية.</p>
+      </li>
+      <li>
+        <span class="when">بعد الحرب</span>
+        <h3>معلّمان من الخارج</h3>
+        <p>يقدّم الأمريكيان إدواردز ديمنج وجوزيف جوران للمصانع اليابانية الضبط الإحصائي للجودة وممارسات التحسين، ومنها دورة PDCA.</p>
+      </li>
+      <li>
+        <span class="when">الخمسينيات وما بعدها</span>
+        <h3>نظام تويوتا للإنتاج</h3>
+        <p>يُنسب إلى تايتشي أونو دور رئيس في بناء نظام تويوتا، وفي قلبه التحسين المستمر، إلى جانب Kanban والتسليم في الوقت المناسب (JIT).</p>
+      </li>
+      <li>
+        <span class="when">1986</span>
+        <h3>الكايزن يصل إلى الغرب</h3>
+        <p>ينشر المستشار الياباني ماساكي إيماي كتابه «Kaizen: The Key to Japan's Competitive Success»، فيصبح الاسم معروفًا خارج اليابان، ثم تتطور الفكرة إلى نظم إدارية تُعرف بعملية التحسين المستمر.</p>
+      </li>
+      <li>
+        <span class="when">2004</span>
+        <h3>الكايزن للحياة الشخصية</h3>
+        <p>يصدر كتاب «One Small Step Can Change Your Life» لروبرت مورر، وهو طبيب نفسي في كلية الطب بجامعة كاليفورنيا لوس أنجلوس (UCLA)، فينقل الفكرة من المصنع إلى العادات اليومية.</p>
+      </li>
+      <li>
+        <span class="when">اليوم</span>
+        <h3>المستشفيات والمدارس والجامعات</h3>
+        <p>تنتشر تطبيقاته في الخدمات الصحية والتعليم، وتظهر دراسات عربية عن تطبيقه في المدارس والجامعات.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- 3 PRINCIPLES -->
+<section class="band band--alt" id="principles" aria-labelledby="h-principles">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">الفصل 3</span>
+      <h2 id="h-principles">ستة مبادئ تشرح الروح</h2>
+      <p class="lead">افتح كل مبدأ لترى كيف يبدو في موقف حقيقي.</p>
+    </div>
+
+    <details open>
+      <summary>ابدأ صغيرًا</summary>
+      <div class="body">
+        <p>تحسين صغير تجرّبه اليوم أنفع من حل مثالي يصل متأخرًا. التجربة السريعة تعلّمك أكثر من الانتظار، وإن لم تنجح فخسارتها قليلة.</p>
+        <div class="ex"><b>مثال:</b> بدل مشروع لإعادة تنظيم المكتب كله، رتّب درجًا واحدًا هذا المساء.</div>
+      </div>
+    </details>
+    <details>
+      <summary>أشرك من ينفّذ العمل</summary>
+      <div class="body">
+        <p>الذين يؤدون المهمة كل يوم هم الأكثر معرفة بها، ولذلك تكون مشاركتهم في التحسين أنفع من القرارات التي تأتي من بعيد.</p>
+        <div class="ex"><b>مثال:</b> اسأل موظف الاستقبال أو عامل المخزن: «ما أكثر شيء يُبطئك؟» قبل أن تضع خطة التحسين.</div>
+      </div>
+    </details>
+    <details>
+      <summary>اجعل المشكلة مرئية</summary>
+      <div class="body">
+        <p>ثقافة التحسين تحتفي بكشف المشكلات مبكرًا، حين تكون صغيرة. المشكلة المخفية تكبر بصمت، والمشكلة المعلنة تُحل بتكلفة أقل.</p>
+        <div class="ex"><b>مثال:</b> لوحة على الجدار يكتب عليها الفريق ما أعاقه اليوم، دون لوم لأحد.</div>
+      </div>
+    </details>
+    <details>
+      <summary>جرّب وتعلّم وقرّر</summary>
+      <div class="body">
+        <p>تغيير سريع تختبره ثم تحكم عليه بالنتائج أفضل من حل كامل يظهر بعد شهور. التجربة تقرّر هل تستثمر فيه أكثر أم تتركه.</p>
+        <div class="ex"><b>مثال:</b> جرّب ترتيب الطاولات الجديد أسبوعًا واحدًا، ثم اسأل: هل قلّ الازدحام فعلًا؟</div>
+      </div>
+    </details>
+    <details>
+      <summary>اذهب إلى مكان العمل الفعلي</summary>
+      <div class="body">
+        <p>اليابانيون يسمّونه «جيمبا» (Gemba) أي «المكان الحقيقي»، حيث يحدث العمل فعلًا. الرؤية المباشرة تكشف ما لا تكشفه التقارير.</p>
+        <div class="ex"><b>مثال:</b> لا تقرأ عن طابور الانتظار في الملخص الأسبوعي. قف عنده عشر دقائق وراقبه.</div>
+      </div>
+    </details>
+    <details>
+      <summary>اعتبر النقد فرصة</summary>
+      <div class="body">
+        <p>في الكايزن يُنظر إلى الانتقاد على أنه فرصة للتحسين. قد يصعب هذا على كثيرين في البداية، لكنه يفتح باب التعلّم بدل الدفاع عن الوضع القائم.</p>
+        <div class="ex"><b>مثال:</b> حين يقول لك زميل «هذا الإجراء بطيء»، اسأل «أين بالضبط؟» ودوّن الجواب.</div>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- 4 TOOLS -->
+<section class="band" id="tools" aria-labelledby="h-tools">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">الفصل 4</span>
+      <h2 id="h-tools">صندوق الأدوات</h2>
+      <p class="lead">أدوات الكايزن بسيطة عن قصد. تعلّم ثلاثًا منها، ثم أضف غيرها حين تحتاج.</p>
+    </div>
+
+    <h3 style="margin-bottom:1rem">1. دورة PDCA: التجربة المنظمة</h3>
+    <div class="pdca">
+      <svg id="pdcaRing" viewBox="0 0 240 240" role="img" aria-label="دورة PDCA الأربع: خطّط، نفّذ، افحص، حسّن"></svg>
+      <div data-tabs id="pdca">
+        <div class="tablist" role="tablist" aria-label="مراحل PDCA">
+          <button role="tab" id="t-p" aria-controls="p-p">خطّط (Plan)</button>
+          <button role="tab" id="t-d" aria-controls="p-d">نفّذ (Do)</button>
+          <button role="tab" id="t-c" aria-controls="p-c">افحص (Check)</button>
+          <button role="tab" id="t-a" aria-controls="p-a">حسّن (Act)</button>
+        </div>
+        <div role="tabpanel" id="p-p" aria-labelledby="t-p">
+          <p>اختر مشكلة واحدة صغيرة وتغييرًا واحدًا، وحدّد كيف ستقيس النتيجة.</p>
+          <div class="ex"><b>مثال توضيحي:</b> نتأخر صباحًا لأننا نبحث عن المفاتيح. التغيير: خطّاف ثابت قرب الباب. القياس: عدد الصباحات المتأخرة.</div>
+        </div>
+        <div role="tabpanel" id="p-d" aria-labelledby="t-d" hidden>
+          <p>جرّب التغيير على نطاق صغير ولمدة محددة، ولا تغيّر ثلاثة أشياء معًا.</p>
+          <div class="ex"><b>مثال توضيحي:</b> علّقوا الخطّاف وجرّبوه أسبوعًا واحدًا فقط.</div>
+        </div>
+        <div role="tabpanel" id="p-c" aria-labelledby="t-c" hidden>
+          <p>قارن بين ما قبل وما بعد بالأرقام أو الوقت، وليس بالانطباع.</p>
+          <div class="ex"><b>مثال توضيحي:</b> كنا نتأخر ثلاثة صباحات من خمسة، فأصبحنا نتأخر صباحًا واحدًا.</div>
+        </div>
+        <div role="tabpanel" id="p-a" aria-labelledby="t-a" hidden>
+          <p>إن نجح التغيير فاجعله المعيار الجديد. وإن لم ينجح فتعلّم منه وابدأ دورة جديدة بفكرة أخرى.</p>
+          <div class="ex"><b>مثال توضيحي:</b> اعتمدنا الخطّاف، والدورة التالية: تجهيز الحقائب مساء.</div>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="sub">2. ترتيب 5S: مكان يخدمك</h3>
+    <p class="muted" style="margin-bottom:1rem;max-width:44rem">خمس كلمات يابانية تبدأ بحرف S عند نقلها إلى الإنجليزية. تنظّم المكان حتى لا تبحث عن أداة ولا تطارد ورقة.</p>
+    <div class="s5">
+      <div class="card"><div class="jp" lang="ja">整理</div><div class="ro">Seiri · Sort</div><h4>الفرز</h4><p>أخرج كل ما لا تحتاجه من المكان.</p></div>
+      <div class="card"><div class="jp" lang="ja">整頓</div><div class="ro">Seiton · Set in order</div><h4>الترتيب</h4><p>ضع كل شيء حيث يسهل الوصول إليه.</p></div>
+      <div class="card"><div class="jp" lang="ja">清掃</div><div class="ro">Seiso · Shine</div><h4>التنظيف</h4><p>نظّف وافحص المكان بانتظام.</p></div>
+      <div class="card"><div class="jp" lang="ja">清潔</div><div class="ro">Seiketsu · Standardize</div><h4>التوحيد</h4><p>اجعل ما نجح قاعدة معروفة للجميع.</p></div>
+      <div class="card"><div class="jp" lang="ja">躾</div><div class="ro">Shitsuke · Sustain</div><h4>الاستدامة</h4><p>حافظ على العادة بالانضباط والمراجعة.</p></div>
+    </div>
+
+    <h3 class="sub">3. جولة الجيمبا: اذهب وشاهد</h3>
+    <div class="grid grid--2">
+      <div class="card">
+        <p>المدير أو صاحب القرار يذهب إلى المكان الذي يُنجَز فيه العمل ليراه بنفسه ويتحدث مع من يؤدونه. هي جلسة تعلّم وتدريب، وليست تفتيشًا.</p>
+      </div>
+      <div class="card">
+        <h4>كيف تمشيها؟</h4>
+        <ol style="margin:0;padding-inline-start:1.3rem">
+          <li>اذهب إلى المكان نفسه، لا إلى القاعة.</li>
+          <li>راقب بصمت عشر دقائق ودوّن ما تراه.</li>
+          <li>اسأل من يعمل: ما الذي يضايقك؟</li>
+          <li>اخرج بتحسين صغير واحد، لا بقائمة طويلة.</li>
+        </ol>
+      </div>
+    </div>
+
+    <h3 class="sub">4. سبعة أنواع من الفاقد</h3>
+    <p class="muted" style="margin-bottom:1rem;max-width:44rem">يحدد نظام تويوتا سبعة أنواع من الفاقد. هذه أمثلة يومية عليها:</p>
+    <div class="waste">
+      <div><b>النقل</b>تمرير الورقة عبر ثلاثة مكاتب قبل أن تُوقَّع.</div>
+      <div><b>المخزون الزائد</b>شراء مستلزمات أكثر من الحاجة فتتكدس وتنتهي صلاحيتها.</div>
+      <div><b>الحركة الزائدة</b>المشي مرارًا لجلب أداة حقها أن تكون في متناول اليد.</div>
+      <div><b>الانتظار</b>اجتماع لا يبدأ حتى يكتمل الحضور.</div>
+      <div><b>الإنتاج الزائد</b>طباعة نسخ أكثر مما سيُستخدم.</div>
+      <div><b>المعالجة الزائدة</b>تنسيق تقرير داخلي بعناية معرض فني.</div>
+      <div><b>العيوب</b>إعادة العمل بسبب خطأ كان يمكن اكتشافه مبكرًا.</div>
+    </div>
+
+    <h3 class="sub">أدوات أخرى ستسمع بها</h3>
+    <div class="grid">
+      <div class="card"><h4>Kanban</h4><p class="small">بطاقات تُظهر حالة العمل وتضبط ما يُنتَج ومتى.</p></div>
+      <div class="card"><h4>Andon</h4><p class="small">إشارة بصرية تُنبّه الجميع فور ظهور مشكلة.</p></div>
+      <div class="card"><h4>Poka-yoke</h4><p class="small">تصميم يمنع الخطأ، أو يجعل ارتكابه صعبًا.</p></div>
+      <div class="card"><h4>حلقات الجودة</h4><p class="small">مجموعة موظفين تحدد المشكلة وتحللها وتحلها.</p></div>
+    </div>
+
+    <div class="card" style="margin-top:3rem" aria-labelledby="h-choose">
+      <h3 id="h-choose" style="margin-bottom:.3rem">أي أداة أبدأ بها؟</h3>
+      <p class="muted small" style="margin-bottom:1.2rem">اختر ما يشبه مشكلتك.</p>
+      <div class="choose">
+        <div class="opts" id="opts" role="group" aria-label="نوع المشكلة"></div>
+        <div class="result" id="chooseOut" aria-live="polite"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 STORIES -->
+<section class="band band--alt" id="stories" aria-labelledby="h-stories">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">الفصل 5</span>
+      <h2 id="h-stories">قصص حقيقية</h2>
+      <p class="lead">حالات موثقة في المصادر المذكورة آخر الصفحة. لم نضع أرقام نتائج لأن المصادر التي راجعناها لا تعرضها بدقة كافية.</p>
+    </div>
+    <div class="grid grid--2">
+      <article class="card">
+        <span class="tag">صناعة</span>
+        <h3>تويوتا</h3>
+        <p>يشجّع نظام تويوتا كل موظف، من خط الإنتاج إلى الإدارة، على اقتراح تحسينات صغيرة، وتُعالج المشكلات فور ظهورها بدل تجاهلها. صار هذا النظام المرجع الذي تعلّم منه العالم.</p>
+        <p class="lesson"><b>الدرس:</b> المشكلة المرئية أرخص حلًا من المشكلة المدفونة.</p>
+      </article>
+      <article class="card">
+        <span class="tag">صحة</span>
+        <h3>مركز فيرجينيا ميسون الطبي، سياتل</h3>
+        <p>طبّق المركز أساليب الكايزن لتقليل أوقات انتظار المرضى. وفي المستشفيات عمومًا استُخدمت لإعادة تصميم مسار المريض، وتوحيد الإجراءات، وإضافة وسائل العرض المرئي.</p>
+        <p class="lesson"><b>الدرس:</b> الخدمات تتحسّن بالمنطق نفسه: ارسم المسار، ابحث عن مكان الانتظار، ثم غيّره.</p>
+      </article>
+      <article class="card">
+        <span class="tag">صحة</span>
+        <h3>كتاب «Healthcare Kaizen»</h3>
+        <p>يجمع أمثلة قدّمتها مؤسسات صحية كبرى، منها Franciscan St. Francis Health وThedaCare. جاءت التحسينات من ممرضين وأطباء وعاملي نظافة وتنفيذيين كبار.</p>
+        <p class="lesson"><b>الدرس:</b> أفضل الأفكار تأتي غالبًا من الصفوف الأمامية.</p>
+      </article>
+      <article class="card">
+        <span class="tag">قطاعات مختلفة</span>
+        <h3>مستشفى إينوي في اليابان ومصنع نسيج في البرازيل</h3>
+        <p>من حالات كتاب «Gemba Kaizen» لماساكي إيماي: تحسين الجودة في مستشفى إينوي، وممارسة الكايزن اليومي في مصنع Tork Ledervin للنسيج في البرازيل.</p>
+        <p class="lesson"><b>الدرس:</b> الفكرة تسافر بين القطاعات والبلدان دون أن تفقد معناها.</p>
+      </article>
+      <article class="card">
+        <span class="tag">أعمال</span>
+        <h3>شركات فورتشن 500</h3>
+        <p>يذكر روبرت مورر في كتابه، بحسب وصفه، أن إحدى عشرة شركة من قائمة Fortune 500 تفوقت على السوق بخطوات معتدلة متتابعة.</p>
+        <p class="lesson"><b>الدرس:</b> الاستمرار يغلب القفزات المتقطعة.</p>
+      </article>
+      <article class="card">
+        <span class="tag">تعليم</span>
+        <h3>الكايزن في التعليم العربي</h3>
+        <p>ظهرت دراسات عن تطبيقه في المدارس الثانوية العامة وإدارات التعليم قبل الجامعي بمصر، وفي مدارس التعليم الأساسي بأسيوط، إضافة إلى تصور مقترح لتطبيقه في الجامعات السعودية. وهي تركّز على متطلبات التطبيق وواقعه.</p>
+        <p class="lesson"><b>الدرس:</b> المجال مفتوح لمن يجرّب ويوثّق.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- 6 SCENARIOS -->
+<section class="band" id="scenarios" aria-labelledby="h-scen">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">الفصل 6</span>
+      <h2 id="h-scen">مواقف من الحياة اليومية</h2>
+      <p class="lead">أربعة مواقف تريك كيف تتحول الفكرة إلى خطوة. الثلاثة الأولى توضيحية من تأليفنا، والرابع من كتاب مورر.</p>
+    </div>
+    <div data-tabs id="scen">
+      <div class="tablist" role="tablist" aria-label="المواقف">
+        <button role="tab" id="s-t1" aria-controls="s-p1">في الصف</button>
+        <button role="tab" id="s-t2" aria-controls="s-p2">في العمل</button>
+        <button role="tab" id="s-t3" aria-controls="s-p3">في البيت</button>
+        <button role="tab" id="s-t4" aria-controls="s-p4">مع النفس</button>
+      </div>
+      <div role="tabpanel" id="s-p1" aria-labelledby="s-t1" class="card">
+        <div><span class="tag tag--warm">موقف توضيحي</span></div>
+        <dl class="kv-list">
+          <div class="kv"><dt>الموقف</dt><dd>معلّمة تلاحظ أن أول عشر دقائق من الحصة تضيع في تهيئة الطلاب.</dd></div>
+          <div class="kv"><dt>الخطوة الصغيرة</dt><dd>تكتب على السبورة نشاطًا افتتاحيًا من ثلاث دقائق قبل دخولهم، وتجرّبه أسبوعًا.</dd></div>
+          <div class="kv"><dt>كيف تقيس؟</dt><dd>كم دقيقة مرّت قبل بدء الدرس الفعلي في كل يوم؟</dd></div>
+          <div class="kv"><dt>الدرس</dt><dd>لم تغيّر المنهج ولا الجدول. غيّرت لحظة واحدة فقط.</dd></div>
+        </dl>
+      </div>
+      <div role="tabpanel" id="s-p2" aria-labelledby="s-t2" class="card" hidden>
+        <div><span class="tag tag--warm">موقف توضيحي</span></div>
+        <dl class="kv-list">
+          <div class="kv"><dt>الموقف</dt><dd>اجتماع أسبوعي يطول ويتشعّب.</dd></div>
+          <div class="kv"><dt>الخطوة الصغيرة</dt><dd>جدول أعمال من ثلاثة بنود يُرسَل قبل الاجتماع بيوم.</dd></div>
+          <div class="kv"><dt>كيف تقيس؟</dt><dd>مدة الاجتماع، وعدد القرارات التي خرج بها.</dd></div>
+          <div class="kv"><dt>الدرس</dt><dd>كثير من الفاقد يكمن في الانتظار والتشتت، لا في المحتوى.</dd></div>
+        </dl>
+      </div>
+      <div role="tabpanel" id="s-p3" aria-labelledby="s-t3" class="card" hidden>
+        <div><span class="tag tag--warm">موقف توضيحي</span></div>
+        <dl class="kv-list">
+          <div class="kv"><dt>الموقف</dt><dd>صباح مزدحم، والمفاتيح تضيع كل يوم.</dd></div>
+          <div class="kv"><dt>الخطوة الصغيرة</dt><dd>خطّاف ثابت قرب الباب. هذا هو الترتيب في 5S: لكل شيء مكان.</dd></div>
+          <div class="kv"><dt>كيف تقيس؟</dt><dd>عدد الصباحات التي بحثتم فيها عن المفاتيح.</dd></div>
+          <div class="kv"><dt>الدرس</dt><dd>ترتيب مكان واحد يحل مشكلة متكررة.</dd></div>
+        </dl>
+      </div>
+      <div role="tabpanel" id="s-p4" aria-labelledby="s-t4" class="card" hidden>
+        <div><span class="tag">من كتاب مورر</span></div>
+        <dl class="kv-list">
+          <div class="kv"><dt>الموقف</dt><dd>شخص يريد أن يمارس الرياضة لكنه يفشل في كل مرة يضع فيها خطة كبيرة.</dd></div>
+          <div class="kv"><dt>الخطوة الصغيرة</dt><dd>يسير في مكانه دقيقة واحدة يوميًا أمام التلفاز، ثم يمتد الأمر إلى فاصل الإعلانات كله.</dd></div>
+          <div class="kv"><dt>أمثلة أخرى في الكتاب</dt><dd>الوقوف دقيقة واحدة على جهاز المشي، أو تنظيف سنّ واحدة بالخيط، أو ترك لقمة واحدة من الطعام.</dd></div>
+          <div class="kv"><dt>لماذا ينجح؟</dt><dd>تقول مراجعة للكتاب إن الخطوات كانت من الصغر بحيث لا يمكن الفشل فيها.</dd></div>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7 PERSONAL -->
+<section class="band band--alt" id="personal" aria-labelledby="h-personal">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">الفصل 7</span>
+      <h2 id="h-personal">كايزن لنفسك</h2>
+      <p class="lead">يرى مورر أن الخطوات الصغيرة تتجاوز مقاومة الدماغ الطبيعية للسلوك الجديد، لأنها لا تثير الخوف. وهذه استراتيجياته الست.</p>
+    </div>
+
+    <ul class="six">
+      <li><b>اسأل أسئلة صغيرة</b>ما أصغر خطوة أستطيع فعلها لأكون أكفأ؟</li>
+      <li><b>فكّر بأفكار صغيرة</b>تخيّل التغيير ذهنيًا قبل أن تبدأه.</li>
+      <li><b>اتخذ أفعالًا صغيرة</b>خطوة من الصغر بحيث لا يمكن الفشل فيها.</li>
+      <li><b>حلّ مشكلات صغيرة</b>انتبه للتفصيلة الصغيرة قبل أن تكبر.</li>
+      <li><b>كافئ بمكافآت صغيرة</b>تحفّزك المكافأة الصغيرة أكثر مما تتوقع.</li>
+      <li><b>التقط اللحظات الصغيرة</b>لاحظ الفرص الصغيرة التي تمر كل يوم.</li>
+    </ul>
+
+    <div class="two">
+      <div class="card">
+        <h3 style="margin-bottom:.4rem">اصنع خطوتك الأولى</h3>
+        <p class="muted small" style="margin-bottom:1rem">اختر مجالًا لترى خطوة مصغّرة مقترحة.</p>
+        <label class="f" for="goal">أريد أن أحسّن</label>
+        <select id="goal"></select>
+        <div class="result" id="goalOut" aria-live="polite" style="margin-top:1rem"></div>
+      </div>
+      <div class="card">
+        <h3 style="margin-bottom:.4rem">متتبّع الثلاثين يومًا</h3>
+        <p class="muted small">ينصح مورر بالتمسك بخطوة واحدة نحو ثلاثين يومًا حتى تصبح عادة. علّم كل يوم تنفّذ فيه خطوتك.</p>
+        <div class="days" id="days" role="group" aria-label="أيام الثلاثين"></div>
+        <div class="stat"><span>الأيام المنجزة</span><b id="done">0 / 30</b></div>
+        <div class="bar"><i id="barFill"></i></div>
+        <div style="margin-top:1rem"><button class="btn btn--ghost btn-sm" id="resetDays" type="button">ابدأ من جديد</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 8 MISTAKES -->
+<section class="band" id="mistakes" aria-labelledby="h-mist">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">الفصل 8</span>
+      <h2 id="h-mist">أخطاء شائعة وبدائلها</h2>
+    </div>
+    <div class="pairs">
+      <div class="pair">
+        <div class="no"><b>تجنّب</b>الخلط بين الكايزن و«حدث كايزن» أسبوعي ثم العودة إلى العادة القديمة.</div>
+        <div class="yes"><b>بدلًا من ذلك</b>اجعل التحسين جزءًا من اليوم، ولو خمس دقائق.</div>
+      </div>
+      <div class="pair">
+        <div class="no"><b>تجنّب</b>انتظار الحل المثالي قبل أن تبدأ.</div>
+        <div class="yes"><b>بدلًا من ذلك</b>جرّب حلًا سريعًا ناقصًا، وقِس أثره، ثم طوّره.</div>
+      </div>
+      <div class="pair">
+        <div class="no"><b>تجنّب</b>فهم الكايزن على أنه «اعمل أكثر».</div>
+        <div class="yes"><b>بدلًا من ذلك</b>اسأل أين يضيع الجهد، وأزل ذلك المصدر أولًا.</div>
+      </div>
+      <div class="pair">
+        <div class="no"><b>تجنّب</b>أن يقرر المكتب والإدارة وحدهما ما يُحسَّن.</div>
+        <div class="yes"><b>بدلًا من ذلك</b>اسأل من ينفّذ العمل واعتمد على ملاحظاته.</div>
+      </div>
+      <div class="pair">
+        <div class="no"><b>تجنّب</b>خطوة أكبر من طاقتك فتتعثر في الأسبوع الأول.</div>
+        <div class="yes"><b>بدلًا من ذلك</b>إذا تعثرت فصغّر الخطوة حتى يصبح الفشل فيها شبه مستحيل.</div>
+      </div>
+      <div class="pair">
+        <div class="no"><b>تجنّب</b>الحكم بالانطباع.</div>
+        <div class="yes"><b>بدلًا من ذلك</b>اختر رقمًا واحدًا تقيسه قبل التغيير وبعده.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 9 START -->
+<section class="band band--alt" id="start" aria-labelledby="h-start">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">الفصل 9</span>
+      <h2 id="h-start">خطتك لأول أربعة أسابيع</h2>
+      <p class="lead">أسبوع لكل مرحلة، بالترتيب.</p>
+    </div>
+    <ol class="weeks">
+      <li><b>الأسبوع الأول: لاحظ</b><p>اختر مكانًا واحدًا (مكتبك أو مطبخك أو حصتك). راقبه عشر دقائق يوميًا ودوّن ما يزعجك.</p></li>
+      <li><b>الأسبوع الثاني: جرّب</b><p>اختر تغييرًا واحدًا يستغرق أقل من خمس دقائق، وطبّقه.</p></li>
+      <li><b>الأسبوع الثالث: قِس</b><p>قارن بين ما قبل وما بعد بعدد أو وقت، لا بالشعور.</p></li>
+      <li><b>الأسبوع الرابع: ثبّت أو عدّل</b><p>إن نجح فاجعله عادة. وإن لم ينجح فصغّر الخطوة أو غيّر الفكرة، وابدأ دورة جديدة.</p></li>
+    </ol>
+
+    <div class="card" style="margin-top:2.5rem" aria-labelledby="h-card">
+      <h3 id="h-card" style="margin-bottom:.3rem">بطاقة كايزن</h3>
+      <p class="muted small" style="margin-bottom:1.2rem">الحقول مملوءة بمثال جاهز. عدّلها لتناسب موقفك ثم انسخ البطاقة.</p>
+      <div class="two">
+        <div>
+          <label class="f" for="cProblem">المشكلة
+            <input type="text" id="cProblem" value="نتأخر صباحًا لأننا نبحث عن المفاتيح">
+          </label>
+          <label class="f" for="cChange">التغيير الصغير (أقل من 5 دقائق)
+            <input type="text" id="cChange" value="تعليق خطّاف ثابت قرب الباب">
+          </label>
+          <label class="f" for="cMeasure">كيف سأقيس؟
+            <input type="text" id="cMeasure" value="عدد الصباحات المتأخرة في الأسبوع">
+          </label>
+          <label class="f" for="cReview">موعد المراجعة
+            <input type="text" id="cReview" value="بعد أسبوع من اليوم">
+          </label>
+        </div>
+        <div>
+          <label class="f" for="cardOut">البطاقة
+            <textarea id="cardOut" rows="9" readonly></textarea>
+          </label>
+          <button class="btn btn-sm" id="copyCard" type="button">انسخ البطاقة</button>
+          <div class="status" id="copyStatus" role="status"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 10 QUIZ -->
+<section class="band" id="quiz" aria-labelledby="h-quiz">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">الفصل 10</span>
+      <h2 id="h-quiz">اختبر نفسك</h2>
+      <p class="lead">خمسة أسئلة قصيرة، وتعرف الجواب فور اختيارك.</p>
+    </div>
+    <div class="quiz card" id="quizBox" aria-live="polite"></div>
+  </div>
+</section>
+
+<!-- SOURCES -->
+<section class="band band--alt" id="sources" aria-labelledby="h-src">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 id="h-src">المصادر</h2>
+      <p class="muted small">الحالات الموثقة وتفاصيل التاريخ والأدوات مأخوذة من المصادر التالية بعد إعادة صياغتها. أما «المواقف التوضيحية» فمن تأليفنا وهي معلَّمة بذلك.</p>
+    </div>
+    <ul class="src">
+      <li><a href="https://blog.gembaacademy.com/?p=18933" target="_blank" rel="noopener">Gemba Academy: مبادئ الكايزن العشرة</a></li>
+      <li><a href="https://www.learnleansigma.com/continuous-improvement/kaizen-small-changes-big-results/" target="_blank" rel="noopener">Learn Lean Sigma: What is Kaizen?</a></li>
+      <li><a href="https://bito.com/en-ae/expert-knowledge/article/kaizen-committed-to-continuous-improvement" target="_blank" rel="noopener">Bito: Kaizen, committed to continuous improvement</a></li>
+      <li><a href="https://blog.kainexus.com/improvement-discipline/kaizen/japanese-management-style-kaizen" target="_blank" rel="noopener">KaiNexus: Japanese management style, Kaizen</a></li>
+      <li><a href="https://www.ebsco.com/research-starters/history/kaizen" target="_blank" rel="noopener">EBSCO Research Starters: Kaizen</a></li>
+      <li><a href="https://wrike.com/blog/kaizen-definition" target="_blank" rel="noopener">Wrike: Understanding Kaizen</a></li>
+      <li><a href="https://www.cleverence.com/amp/articles/business-blogs/what-is-kaizen-in-manufacturing-understanding-continuous-improvement/" target="_blank" rel="noopener">Cleverence: Kaizen in manufacturing</a></li>
+      <li><a href="https://www.theknowledgeacademy.com/tools/kaizen-tools/" target="_blank" rel="noopener">The Knowledge Academy: Kaizen tools</a></li>
+      <li><a href="https://www.taylorfrancis.com/books/9780429251481" target="_blank" rel="noopener">Healthcare Kaizen (Taylor &amp; Francis)</a></li>
+      <li><a href="https://www.overdrive.com/media/965641" target="_blank" rel="noopener">Gemba Kaizen، ماساكي إيماي</a></li>
+      <li><a href="https://deconch30.medium.com/kaizen-50452a398da7" target="_blank" rel="noopener">Medium: Kaizen، أمثلة من الحياة الواقعية</a></li>
+      <li><a href="https://opencourser.com/book/57n40a/one-small-step-can-change-your-life" target="_blank" rel="noopener">One Small Step Can Change Your Life، روبرت مورر</a></li>
+      <li><a href="https://www.leanblog.org/2012/01/book-review-one-small-step-can-change-your-life-the-kaizen-way/" target="_blank" rel="noopener">Lean Blog: مراجعة كتاب مورر</a></li>
+      <li><a href="https://fs.blog/making-a-change-one-small-step/" target="_blank" rel="noopener">Farnam Street: Making a Change, One Small Step</a></li>
+      <li><a href="https://sharjah24.ae/ar/Articles/2024/12/17/NJ1537" target="_blank" rel="noopener">الشارقة 24: مبدأ الكايزن</a></li>
+      <li><a href="https://jsu.journals.ekb.eg/article_167436.html" target="_blank" rel="noopener">تطوير الأداء المؤسسي للمدارس الثانوية العامة في مصر في ضوء كايزن</a></li>
+      <li><a href="https://search.shamaa.org/FullRecord?ID=259942" target="_blank" rel="noopener">متطلبات تطبيق كايزن في إدارات التعليم قبل الجامعي بمصر</a></li>
+      <li><a href="https://journals.iugaza.edu.ps/index.php/IUGJEPS/article/download/12942/4708" target="_blank" rel="noopener">تصور مقترح لتطبيق كايزن في الجامعات السعودية</a></li>
+    </ul>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap"><strong>إعداد وتصميم: أ/ عائشة بنت حامد البحيري</strong><br>دليل الكايزن · آخر تحديث 22 أكتوبر 2026. المحتوى تعليمي ويلخّص مصادر منشورة.</div>
+</footer>
+
+</div>
+
+<script>
+(function(){
+'use strict';
+var $=function(s,r){return (r||document).querySelector(s)};
+var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+function fmt(x,d){return Number(x).toLocaleString('en-US',{maximumFractionDigits:d==null?1:d})}
+
+/* ---------- tabs ---------- */
+$$('[data-tabs]').forEach(function(group){
+  var tabs=$$('[role=tab]',group);
+  var panels=tabs.map(function(t){return document.getElementById(t.getAttribute('aria-controls'))});
+  function select(i,focus){
+    tabs.forEach(function(t,j){t.setAttribute('aria-selected',String(j===i));t.tabIndex=j===i?0:-1});
+    panels.forEach(function(p,j){p.hidden=j!==i});
+    group.dispatchEvent(new CustomEvent('tabchange',{detail:i}));
+    if(focus)tabs[i].focus();
+  }
+  tabs.forEach(function(t,i){
+    t.addEventListener('click',function(){select(i)});
+    t.addEventListener('keydown',function(e){
+      var n=i;
+      if(e.key==='ArrowLeft')n=(i+1)%tabs.length;
+      else if(e.key==='ArrowRight')n=(i-1+tabs.length)%tabs.length;
+      else return;
+      e.preventDefault();select(n,true);
+    });
+  });
+  select(0);
+});
+
+/* ---------- PDCA ring ---------- */
+(function(){
+  var svg=$('#pdcaRing'),group=$('#pdca');
+  if(!svg||!group)return;
+  var tabs=$$('[role=tab]',group);
+  var letters=['P','D','C','A'],cx=120,cy=120,r=84;
+  function pt(a,rr){var rad=(a-90)*Math.PI/180;return [cx+(rr||r)*Math.cos(rad),cy+(rr||r)*Math.sin(rad)]}
+  var h='';
+  for(var i=0;i<4;i++){
+    var a0=i*90+5,a1=(i+1)*90-5,p0=pt(a0),p1=pt(a1),m=pt((a0+a1)/2);
+    h+='<path class="arc" data-i="'+i+'" d="M'+p0[0].toFixed(2)+' '+p0[1].toFixed(2)+' A'+r+' '+r+' 0 0 1 '+p1[0].toFixed(2)+' '+p1[1].toFixed(2)+'"/>';
+    h+='<text class="arc-l" data-i="'+i+'" x="'+m[0].toFixed(1)+'" y="'+(m[1]+7).toFixed(1)+'" text-anchor="middle">'+letters[i]+'</text>';
+  }
+  h+='<text class="mid" x="120" y="118" text-anchor="middle">PDCA</text><text class="mid2" x="120" y="138" text-anchor="middle">كرّر الدورة</text>';
+  svg.innerHTML=h;
+  function setActive(i){
+    $$('.arc,.arc-l',svg).forEach(function(el){el.classList.toggle('on',Number(el.getAttribute('data-i'))===i)});
+  }
+  $$('.arc,.arc-l',svg).forEach(function(el){
+    el.addEventListener('click',function(){tabs[Number(el.getAttribute('data-i'))].click()});
+  });
+  group.addEventListener('tabchange',function(e){setActive(e.detail)});
+  setActive(0);
+})();
+
+/* ---------- compounding calculator ---------- */
+(function(){
+  var rate=$('#rate'),weeks=$('#weeks');
+  if(!rate||!weeks)return;
+  var chart=$('#chart');
+  function draw(r,n){
+    var W=320,H=190,L=46,R=14,T=30,B=34,pw=W-L-R,ph=H-T-B;
+    var k=r/100,total=(Math.pow(1+k,n)-1)*100;
+    var pts=[],lin=[];
+    for(var w=0;w<=n;w++){
+      var v=(Math.pow(1+k,w)-1)*100;
+      pts.push([L+pw*w/n,T+ph-(total?ph*v/total:0)]);
+    }
+    var lv=r*n;
+    var linEnd=T+ph-(total?ph*lv/total:0);
+    var path=pts.map(function(p,i){return (i?'L':'M')+p[0].toFixed(1)+' '+p[1].toFixed(1)}).join(' ');
+    var area=path+' L'+(L+pw)+' '+(T+ph)+' L'+L+' '+(T+ph)+' Z';
+    var end=pts[pts.length-1];
+    var s='';
+    [0,0.5,1].forEach(function(f){
+      var y=T+ph-ph*f;
+      s+='<line class="grid-l" x1="'+L+'" y1="'+y.toFixed(1)+'" x2="'+(L+pw)+'" y2="'+y.toFixed(1)+'"/>';
+      s+='<text x="'+(L-6)+'" y="'+(y+3.5).toFixed(1)+'" text-anchor="end">'+fmt(total*f,0)+'%</text>';
+    });
+    s+='<path class="ar" d="'+area+'"/>';
+    s+='<line class="lin" x1="'+L+'" y1="'+(T+ph)+'" x2="'+(L+pw)+'" y2="'+linEnd.toFixed(1)+'"/>';
+    s+='<path class="ln" d="'+path+'"/>';
+    s+='<circle class="dot" cx="'+end[0].toFixed(1)+'" cy="'+end[1].toFixed(1)+'" r="5"/>';
+    s+='<text class="vl" x="'+(L+pw)+'" y="'+(end[1]-12).toFixed(1)+'" text-anchor="end">+'+fmt(total)+'%</text>';
+    s+='<text x="'+L+'" y="'+(H-12)+'" text-anchor="start">0</text>';
+    s+='<text x="'+(L+pw/2)+'" y="'+(H-12)+'" text-anchor="middle">'+fmt(n/2,0)+'</text>';
+    s+='<text x="'+(L+pw)+'" y="'+(H-12)+'" text-anchor="end">'+fmt(n,0)+' أسبوعًا</text>';
+    chart.innerHTML=s;
+  }
+  function update(){
+    var r=Number(rate.value),n=Number(weeks.value);
+    var total=(Math.pow(1+r/100,n)-1)*100;
+    $('#rateOut').textContent=fmt(r)+'%';
+    $('#weeksOut').textContent=fmt(n,0)+' أسبوعًا';
+    $('#total').textContent='+'+fmt(total)+'%';
+    $('#calcNote').textContent='لو جمعنا التحسين جمعًا بسيطًا لحصلنا على '+fmt(r*n)+'% فقط. الفرق يأتي من أن كل تحسين جديد يبني على ما سبقه.';
+    draw(r,n);
+  }
+  rate.addEventListener('input',update);
+  weeks.addEventListener('input',update);
+  update();
+})();
+
+/* ---------- tool chooser ---------- */
+(function(){
+  var data=[
+    {q:'المكان فوضوي، ويضيع مني الوقت في البحث',t:'ترتيب 5S',w:'خمس خطوات تُعيد للمكان وضوحه، وتنصح بها المصادر لأماكن العمل غير المنظمة.',m:'ابدأ بالفرز: أخرج كل ما لا تحتاجه من درج واحد أو رف واحد فقط.'},
+    {q:'لا أعرف أين المشكلة بالضبط',t:'جولة الجيمبا',w:'الرؤية المباشرة لمكان العمل تكشف ما لا تكشفه التقارير.',m:'اذهب إلى المكان نفسه، وراقب عشر دقائق دون حكم، ثم اسأل من يعمل فيه.'},
+    {q:'عندي فكرة تغيير وأريد اختبارها',t:'دورة PDCA',w:'تحوّل الفكرة إلى تجربة صغيرة تُقاس نتيجتها قبل التعميم.',m:'حدّد رقمًا واحدًا تقيسه، ثم جرّب الفكرة أسبوعًا فقط.'},
+    {q:'أخطاء تتكرر رغم الانتباه',t:'Poka-yoke، منع الخطأ',w:'الاعتماد على الانتباه وحده لا يكفي. صمّم الخطوة بحيث يصعب الخطأ.',m:'ضع قائمة تحقق قصيرة عند النقطة التي يقع فيها الخطأ.'},
+    {q:'وقتي يضيع في الانتظار والتنقل',t:'أنواع الفاقد السبعة',w:'تسمّي لك مصدر الضياع حتى تعالجه بدقة.',m:'دوّن أين تنتظر وأين تتحرك بلا داعٍ هذا الأسبوع، ثم اختر مصدرًا واحدًا لتقليله.'}
+  ];
+  var box=$('#opts'),out=$('#chooseOut');
+  if(!box||!out)return;
+  data.forEach(function(d,i){
+    var b=document.createElement('button');
+    b.type='button';b.className='opt';b.textContent=d.q;b.setAttribute('aria-pressed','false');
+    b.addEventListener('click',function(){show(i)});
+    box.appendChild(b);
+  });
+  function show(i){
+    $$('.opt',box).forEach(function(b,j){b.setAttribute('aria-pressed',String(j===i))});
+    var d=data[i];
+    out.innerHTML='<div class="muted small">الأداة المقترحة</div><h4></h4><p></p><div class="ex"><b>خطوتك الأولى:</b> <span></span></div>';
+    $('h4',out).textContent=d.t;
+    $('p',out).textContent=d.w;
+    $('.ex span',out).textContent=d.m;
+  }
+  show(0);
+})();
+
+/* ---------- personal step builder ---------- */
+(function(){
+  var data=[
+    {g:'لياقتي',q:'ما أصغر حركة أستطيع فعلها اليوم؟',s:'السير في مكانك دقيقة واحدة أمام التلفاز.',r:'علّم المربع في متتبّع الأيام.'},
+    {g:'ادخاري',q:'أي مشتريات يومية أستطيع تعديل واحد منها؟',s:'عدّل مشترى يوميًا واحدًا فقط، ولا تغيّر ميزانيتك كلها.',r:'اكتب في ورقة المبلغ الذي وفّرته هذا الأسبوع.'},
+    {g:'ترتيب مكتبي',q:'ما الورقة الواحدة التي أستطيع تصنيفها الآن؟',s:'ارفع ورقة واحدة وضعها في مكانها.',r:'استمتع بالمساحة الصغيرة التي ظهرت أمامك.'},
+    {g:'علاقاتي بزملائي',q:'ما الجملة اللطيفة التي أقولها اليوم؟',s:'قل جملة لطيفة واحدة لزميل.',r:'لاحظ ردّ فعله، ودوّنه في سطر.'},
+    {g:'طعامي',q:'ما أصغر نقص أستطيع تحمّله؟',s:'تناول لقمة أقل في كل وجبة، ثم زد الأمر بعد شهر.',r:'اشرب كوب شاي أو ماء تحبه بعد الوجبة.'},
+    {g:'طلب زيادة أو ترقية',q:'كيف أتدرب على طلبي بلا خوف؟',s:'تمرّن على طلبك بصوت عالٍ دقيقة واحدة يوميًا.',r:'سجّل في ورقة جملة واحدة أحسنت قولها اليوم.'}
+  ];
+  var sel=$('#goal'),out=$('#goalOut');
+  if(!sel||!out)return;
+  data.forEach(function(d,i){var o=document.createElement('option');o.value=i;o.textContent=d.g;sel.appendChild(o)});
+  function show(){
+    var d=data[Number(sel.value)];
+    out.innerHTML='<div class="kv"><dt>السؤال الصغير</dt><dd></dd></div><div class="kv"><dt>الخطوة (دقيقة واحدة)</dt><dd></dd></div><div class="kv"><dt>مكافأتك الصغيرة</dt><dd></dd></div>';
+    var dd=$$('dd',out);
+    dd[0].textContent=d.q;dd[1].textContent=d.s;dd[2].textContent=d.r;
+  }
+  sel.addEventListener('change',show);
+  show();
+})();
+
+/* ---------- 30-day tracker ---------- */
+(function(){
+  var box=$('#days');
+  if(!box)return;
+  var KEY='kaizen30-days';
+  var state=[];
+  try{state=JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){state=[]}
+  if(!Array.isArray(state))state=[];
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}}
+  function count(){
+    var n=$$('input',box).filter(function(i){return i.checked}).length;
+    $('#done').textContent=n+' / 30';
+    $('#barFill').style.width=(n/30*100)+'%';
+  }
+  for(var d=1;d<=30;d++){(function(d){
+    var l=document.createElement('label');l.className='day';
+    var i=document.createElement('input');i.type='checkbox';i.id='day-'+d;
+    i.setAttribute('aria-label','اليوم '+d);
+    i.checked=state.indexOf(d)>-1;
+    var s=document.createElement('span');s.textContent=d;
+    i.addEventListener('change',function(){
+      state=state.filter(function(x){return x!==d});
+      if(i.checked)state.push(d);
+      save();count();
+    });
+    l.appendChild(i);l.appendChild(s);box.appendChild(l);
+  })(d)}
+  $('#resetDays').addEventListener('click',function(){
+    state=[];save();$$('input',box).forEach(function(i){i.checked=false});count();
+  });
+  count();
+})();
+
+/* ---------- Kaizen card ---------- */
+(function(){
+  var ids=['cProblem','cChange','cMeasure','cReview'];
+  var out=$('#cardOut');
+  if(!out)return;
+  function build(){
+    var v=ids.map(function(id){return $('#'+id).value.trim()||'...'});
+    out.value='بطاقة كايزن\n\nالمشكلة: '+v[0]+'\nالتغيير الصغير: '+v[1]+'\nكيف سأقيس: '+v[2]+'\nموعد المراجعة: '+v[3]+'\n\nبعد المراجعة: أثبّت التغيير إن نجح، وإلا أصغّره أو أغيّر الفكرة.';
+  }
+  ids.forEach(function(id){$('#'+id).addEventListener('input',build)});
+  build();
+  var st=$('#copyStatus');
+  $('#copyCard').addEventListener('click',function(){
+    function fallback(){out.focus();out.select();st.textContent='حدّد النص ثم انسخه يدويًا.'}
+    try{
+      if(navigator.clipboard&&navigator.clipboard.writeText){
+        navigator.clipboard.writeText(out.value).then(function(){st.textContent='تم نسخ البطاقة.'},fallback);
+      }else fallback();
+    }catch(e){fallback()}
+  });
+})();
+
+/* ---------- quiz ---------- */
+(function(){
+  var Q=[
+    {q:'ما المعنى المباشر لكلمة «كايزن»؟',o:['إنتاج بكميات كبيرة','التغيير للأفضل','التحكم في المخزون'],a:1,e:'«كاي» تعني التغيير و«زن» تعني الجيّد، فمعناها التغيير للأفضل.'},
+    {q:'أي أداة تناسب مكان عمل فوضويًا؟',o:['ترتيب 5S','دورة PDCA','حلقات الجودة'],a:0,e:'5S تبدأ بالفرز والترتيب والتنظيف، وهي الأنسب للأماكن غير المنظمة.'},
+    {q:'ما الخطوة الأولى في دورة PDCA؟',o:['التنفيذ','الفحص','التخطيط'],a:2,e:'تبدأ الدورة بالتخطيط (Plan)، ثم التنفيذ فالفحص فالتحسين.'},
+    {q:'أي هذه أقرب إلى روح الكايزن؟',o:['إطلاق مشروع ضخم مرة في السنة','تجربة تغيير صغير وقياس أثره','انتظار الحل المثالي قبل أي خطوة'],a:1,e:'الكايزن يفضّل التجربة الصغيرة السريعة التي تُقاس نتيجتها.'},
+    {q:'لماذا ينصح مورر بالخطوات الصغيرة جدًا؟',o:['لأنها تتجاوز مقاومة الدماغ للسلوك الجديد','لأنها أرخص دائمًا','لأن الأهداف الكبيرة ممنوعة'],a:0,e:'الخطوات الصغيرة لا تثير الخوف، فتتجاوز المقاومة المعتادة للتغيير.'}
+  ];
+  var box=$('#quizBox');
+  if(!box)return;
+  var i=0,score=0;
+  function render(){
+    if(i>=Q.length){
+      box.innerHTML='<h3></h3><p class="muted" style="margin-block:.5rem 1rem"></p><button class="btn" type="button">أعد الاختبار</button>';
+      $('h3',box).textContent='نتيجتك: '+score+' من '+Q.length;
+      $('p',box).textContent=score>=4?'أنت جاهز للتطبيق. انتقل إلى بطاقة الكايزن وابدأ.':'راجع الفصول التي ترددت فيها، ثم جرّب مرة أخرى.';
+      $('button',box).addEventListener('click',function(){i=0;score=0;render()});
+      return;
+    }
+    var q=Q[i];
+    box.innerHTML='<div class="q-meta"><span>السؤال '+(i+1)+' من '+Q.length+'</span><span>الدرجة: '+score+'</span></div><h3></h3><div class="q-opts"></div><div class="q-fb" role="status"></div><div></div>';
+    $('h3',box).textContent=q.q;
+    var wrap=$('.q-opts',box),fb=$('.q-fb',box),nextHost=box.lastElementChild;
+    q.o.forEach(function(t,k){
+      var b=document.createElement('button');b.type='button';b.className='q-opt';b.textContent=t;
+      b.addEventListener('click',function(){
+        $$('.q-opt',wrap).forEach(function(x,j){x.disabled=true;if(j===q.a)x.classList.add('right')});
+        if(k===q.a){score++;fb.className='q-fb ok';fb.textContent='صحيح. '+q.e}
+        else{b.classList.add('wrong');fb.className='q-fb no';fb.textContent='ليست هذه. '+q.e}
+        var n=document.createElement('button');n.type='button';n.className='btn btn-sm';
+        n.textContent=i===Q.length-1?'اعرض النتيجة':'السؤال التالي';
+        n.addEventListener('click',function(){i++;render()});
+        nextHost.appendChild(n);n.focus();
+      });
+      wrap.appendChild(b);
+    });
+  }
+  render();
+})();
+
+/* ---------- nav highlight ---------- */
+(function(){
+  var links=$$('.nav a'),map={};
+  links.forEach(function(a){map[a.getAttribute('href').slice(1)]=a});
+  if(!('IntersectionObserver' in window))return;
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(!e.isIntersecting)return;
+      links.forEach(function(l){l.removeAttribute('aria-current')});
+      var l=map[e.target.id];
+      if(l)l.setAttribute('aria-current','true');
+    });
+  },{rootMargin:'-35% 0px -60% 0px'});
+  $$('main section[id]').forEach(function(s){io.observe(s)});
+})();
+})();
+</script>
+</body>
+</html>
